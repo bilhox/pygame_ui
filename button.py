@@ -1,10 +1,11 @@
 import pygame
+import component
 
-class Button:
+class Button(component.Component):
 
     def __init__(self):
-
-        self.rect = pygame.Rect(0,0,0,0)
+        super().__init__()
+        
         self.state = "NONE"
         self.event = lambda : None
         self.font = pygame.Font(None, 20)
@@ -56,7 +57,7 @@ class Button:
         self.colors = color_dict
         self.__update_surfaces()
 
-    def update(self):
+    def update(self, dt):
         pass
 
     def events(self, event : pygame.Event):
