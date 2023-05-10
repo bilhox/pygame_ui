@@ -3,6 +3,7 @@ import sys
 
 import button
 import entry
+import section
 
 
 screen = pygame.display.set_mode([800,600])
@@ -24,6 +25,10 @@ foo.set_position([100, 300])
 foo.set_size([200, 60])
 foo.set_font(button_font)
 
+sec = section.Section()
+sec.components["but"] = but
+sec.components["foo"] = foo
+
 clock = pygame.Clock()
 
 while True:
@@ -36,12 +41,10 @@ while True:
             case pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
-        but.events(event)
-        foo.events(event)
+        sec.events(event)
     
-    foo.update(dt)
+    sec.update(dt)
     
-    but.display(screen)
-    foo.display(screen)
+    sec.display(screen)
     
     pygame.display.flip()
