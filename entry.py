@@ -23,7 +23,7 @@ class Input(component.Component):
             "ACTIVE":[170,170,170]})
 
         self.typing = False
-        self.cursor = [0, True]
+        self.cursor = [0, True, 0, 0.4]
 
         self.key_repeating_waiting_time = 1
         self.key_repeating_frequency = 0.05
@@ -59,6 +59,13 @@ class Input(component.Component):
     def update(self, dt):
         if not self.typing or self._key_pressed == None:
             return
+        
+        if self.cursor[2] >= 0:
+            self.cursor[2] -= dt
+            if self.cursor[2] < 0:
+                self.cursor[2] = self.cursor[3]
+                self.cursor[1] = not self.cursor[1]
+
         
         if self._key_pressed[2] <= 0:
             if self._key_pressed[3] <= 0:
@@ -147,8 +154,8 @@ class Input(component.Component):
             self.cursor[0] += 1
         
         text_width = self.font.size(self.text[:self.cursor[0]])[0]
-        if text_width - self._offset_x + 3 > self.rect.width:
-            self._offset_x = text_width + 3 - self.rect.w
+        if text_width - self._offset_x + 3 > self.rect.width - 3:
+            self._offset_x = text_width + 3 - self.rect.w + 3
         elif text_width - self._offset_x + 3 < 0:
             self._offset_x = max(self._offset_x - self.rect.w, 0)
 
@@ -159,7 +166,7 @@ class Input(component.Component):
 
         for i in range(len(self.text)-1,-1,-1):
             text_width = self.font.size(self.text[:i])[0]
-            if(text_width + 3 - self._offset_x < self.rect.w):
+            if(text_width + 3 - self._offset_x < self.rect.w - 10):
                 self.visible_range[1] = i
                 break
         
@@ -186,7 +193,7 @@ class Input(component.Component):
                 3 - self._offset_x,
                 self.rect.h / 2 - self.text_surf.get_height() / 2
             ])
-        if self.typing:
+        if self.typing and self.cursor[1]:
             pygame.draw.line(final_surf, [0,0,0], [
                 self.font.size(self.text[0:self.cursor[0]])[0] - self._offset_x + 3,
                 self.rect.h / 2 - self.text_surf.get_height() / 2,
@@ -194,4 +201,4 @@ class Input(component.Component):
                 self.font.size(self.text[0:self.cursor[0]])[0] - self._offset_x + 3,
                 self.rect.h / 2 + self.text_surf.get_height() / 2
             ])
-        dest.blit(final_surf, self.rect.topleft)
+        dest.blit(final_surf, [self.rect.x - self.parent.rect.x, self.rect.y - self.parent.rect.y])

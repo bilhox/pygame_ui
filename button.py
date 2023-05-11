@@ -82,4 +82,4 @@ class Button(component.Component):
 
     def display(self, dest : pygame.Surface):
 
-        dest.blit(self.surfaces[self.state], self.rect.topleft)
+        dest.blit(self.surfaces[self.state], [self.rect.x - self.parent.rect.x, self.rect.y - self.parent.rect.y])

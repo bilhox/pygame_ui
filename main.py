@@ -13,21 +13,19 @@ pygame.font.init()
 button_font = pygame.Font(None, 30)
 
 but = button.Button()
-but.set_position([100,100])
-but.set_size([300,175])
 but.event = lambda : print("yes")
 
 but.set_text("> Clé\"k ichi <")
 but.set_font(button_font)
 
 foo = entry.Input()
-foo.set_position([100, 300])
-foo.set_size([200, 60])
 foo.set_font(button_font)
 
 sec = section.Section()
-sec.components["but"] = but
-sec.components["foo"] = foo
+sec.set_size([400,400])
+sec.set_position([100,100])
+sec.add_component(but, 0.5)
+sec.add_component(foo, 0.5)
 
 clock = pygame.Clock()
 
@@ -44,7 +42,6 @@ while True:
         sec.events(event)
     
     sec.update(dt)
-    
+
     sec.display(screen)
-    
     pygame.display.flip()
