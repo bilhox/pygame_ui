@@ -17,9 +17,7 @@ class Section(component.Component):
         self.components.append(component)
         if weight == -1:
             remaining = 1 - sum(self._weights)
-            if(remaining == 1):
-                self._weights.append(1)
-            elif(remaining < 1):
+            if(remaining <= 1):
                 self._weights.append(remaining)
             else:
                 self._weights.append(self._weights[-1])
@@ -39,7 +37,6 @@ class Section(component.Component):
         pos = list([self.rect.x + parent_position[0] , self.rect.y + parent_position[1]])
         i = 0
         for w in self._weights:
-            print(pos)
             self.components[i].set_position(pos.copy())
             self.components[i].set_size([self.rect.w, w*self.rect.h])
             i += 1

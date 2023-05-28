@@ -22,7 +22,7 @@ class Button(component.Component):
     
     def set_size(self, size : tuple[int, int]):
         self.rect.size = size
-        self.set_colors(self.colors)
+        self.__update_surfaces()
 
     def set_text(self, text : str):
         self.text = text
@@ -54,7 +54,8 @@ class Button(component.Component):
 
     def set_colors(self, color_dict : dict[list[int, int, int]]):
 
-        self.colors = color_dict
+        for state, color in color_dict.items():
+            self.colors[f"state_{state}"] = color
         self.__update_surfaces()
 
     def update(self, dt):
@@ -82,4 +83,4 @@ class Button(component.Component):
 
     def display(self, dest : pygame.Surface):
 
-        dest.blit(self.surfaces[self.state], [self.rect.x - self.parent.rect.x, self.rect.y - self.parent.rect.y])
+        dest.blit(self.surfaces[f"state_{self.state}"], [self.rect.x - self.parent.rect.x, self.rect.y - self.parent.rect.y])

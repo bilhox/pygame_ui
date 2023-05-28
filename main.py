@@ -24,8 +24,8 @@ foo.set_font(button_font)
 sec = section.Section()
 sec.set_size([400,400])
 sec.set_position([100,100])
-sec.add_component(but, 0.5)
-sec.add_component(foo, 0.5)
+sec.add_component(but, 0.25)
+sec.add_component(foo)
 
 clock = pygame.Clock()
 
