@@ -1,6 +1,10 @@
 import pygame
 import component
 
+"""
+Does nothing for now, it's just the structure
+"""
+
 class Scrollbar(component.Component):
 
     def __init__(self):
